@@ -738,7 +738,7 @@ export class Market {
     }
 
     let wrappedSolAccount: Account | null = null;
-    if (payer.equals(ownerAddress)) {
+    if (!payer.equals(ownerAddress)) {
       if (
         (side === 'buy' && this.quoteMintAddress.equals(WRAPPED_SOL_MINT)) ||
         (side === 'sell' && this.baseMintAddress.equals(WRAPPED_SOL_MINT))
@@ -776,7 +776,7 @@ export class Market {
         signers.push(wrappedSolAccount);
       }
     } else {
-      throw new Error('Invalid payer account');
+      throw new Error('Payer and Owner accounts should be different');
     }
 
     const placeOrderInstruction = this.makePlaceOrderInstruction(connection, {
